@@ -1,31 +1,46 @@
 pragma solidity ^0.4.21;
 
-contract RobustDividendToken {
+contract DividendToken {
 
-    string public name = "Robust Dividend Token";
+    string public name = "Dividend Token";
     string public symbol = "DIV";
     uint8 public decimals = 18;
-    uint blocksAday = 6500;
-    uint public rewardPerDay = 50;
-    uint public minNodeamount = 5000;
-
+    uint blocksAday = 6500; // Rough rounded up blocks perday based on 14sec eth block time
+    uint public rewardPerDay = 50; // Amount perday you can claim from the dividend
+    uint public minNodeamount = 5000; // Min amount to needed to claim dividend
+    address public owner = msg.sender;
+    uint256 public scaling = uint256(10) ** 8;
+    uint256 public scaledRemainder = 0;
+    uint256 public scaledDividendPerToken = blocksAday / rewardPerDay; // Calc for the reward to equal only 50 coins paid out perday
     uint256 public totalSupply = 21000000 * (uint256(10) ** decimals); //21m coins
 
     mapping(address => uint256) public balanceOf;
+    mapping(address => uint256) public scaledDividendBalanceOf;
+    mapping(address => uint256) public scaledDividendCreditedTo;
+    mapping(address => mapping(address => uint256)) public allowance;
+    
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
     constructor() public {
         // Initially assign all tokens to the contract's creator.
         balanceOf[msg.sender] = totalSupply;
         emit Transfer(address(0), msg.sender, totalSupply);
     }
-
-    uint256 public scaling = uint256(10) ** 8;
-
-    mapping(address => uint256) public scaledDividendBalanceOf;
-
-    uint256 public scaledDividendPerToken;
-
-    mapping(address => uint256) public scaledDividendCreditedTo;
+    
+    // ------------------------------------------------------------------------
+    // Change Required Tokens
+    // ------------------------------------------------------------------------
+    function changeRequiredTokens(uint _value) public {
+        minNodeamount = _value;
+    }
+    
+    // ------------------------------------------------------------------------
+    // Change reward amount
+    // ------------------------------------------------------------------------
+    function changeNodeReward(uint _value) public {
+        rewardPerDay = _value;
+    }
 
     function update(address account) internal {
         if (balanceOf[account] >= minNodeamount){
@@ -35,11 +50,6 @@ contract RobustDividendToken {
         scaledDividendCreditedTo[account] = scaledDividendPerToken;
         }
     }
-
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(address indexed owner, address indexed spender, uint256 value);
-
-    mapping(address => mapping(address => uint256)) public allowance;
 
     function transfer(address to, uint256 value) public returns (bool success) {
         require(balanceOf[msg.sender] >= value);
@@ -70,8 +80,7 @@ contract RobustDividendToken {
         emit Transfer(from, to, value);
         return true;
     }
-
-    uint256 public scaledRemainder = 0;
+    
 
     function deposit() public payable {
         // scale the deposit and add the previous remainder
