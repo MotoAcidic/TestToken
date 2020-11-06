@@ -1,0 +1,61 @@
+{
+	"compiler": {
+		"version": "0.6.2+commit.bacdbe57"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/CatThis/dividend.sol": "Context"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/CatThis/dividend.sol": {
+			"keccak256": "0xb82026feed33d5af380380d50572331b23f8f281255c195984b81718e2aa66c7",
+			"urls": [
+				"bzz-raw://dbbfd6e3967b3c1937530ab891d0d9b2d6c39ae24127067ba26c08647184c4ad",
+				"dweb:/ipfs/QmWqmdPjpeX3qKhPwA9mS3jiPtc64Mn2F3N8NRkbCGj5KS"
+			]
+		},
+		"localhost/CatThis/libraries/Address.sol": {
+			"keccak256": "0x0939c84211a80b72a329dbecb5a5485a30838b3499adf8eaf02270e8cad536d4",
+			"urls": [
+				"bzz-raw://4339e3d125caab99c65b8969e7f6207918ab3a98f0246ae76d35ad69e82d0366",
+				"dweb:/ipfs/QmaU7LF4MyRhn7z5VJ9eUnqHuM5cAkcAbA84XH1YzjsBfZ"
+			]
+		},
+		"localhost/CatThis/libraries/EnumerableSet.sol": {
+			"keccak256": "0x123e9dbf5a88da548af7a69e0638b7161a5b73a31bc44f4d00f9a56784b97ab2",
+			"urls": [
+				"bzz-raw://2080c610a1b5116dd7cb2ae8fb021bf3f95ca5c966ad848304a0ce98bef13bd7",
+				"dweb:/ipfs/QmWqXVtyFGXmoMJCbrdKvcujjPyCGcocze9peQ4UNUiepN"
+			]
+		},
+		"localhost/CatThis/libraries/SafeMath.sol": {
+			"keccak256": "0x1de4b0c709b12d6091898b48d313de58ef0ed58ed05430f497ff36e6daf24389",
+			"urls": [
+				"bzz-raw://74b14d14c196a9a1146fefd2b6c3b2f737876f59bfc4c92d434470df5960a78e",
+				"dweb:/ipfs/QmSSFTNhdoAzZt6KNKyT6puM9mujERoi1iDn3MVrFSgsAd"
+			]
+		}
+	},
+	"version": 1
+}

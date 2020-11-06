@@ -1,18 +1,20 @@
 pragma solidity ^0.4.21;
 
-contract DividendToken {
+import "./Ownable.sol";
 
-    string public name = "Dividend Token";
-    string public symbol = "DIV";
+contract CatThis is Ownable {
+
+    string public name = "CatThis";
+    string public symbol = "CATS";
     uint8 public decimals = 18;
     uint blocksAday = 6500; // Rough rounded up blocks perday based on 14sec eth block time
-    uint public rewardPerDay = 50; // Amount perday you can claim from the dividend
-    uint public minNodeamount = 5000; // Min amount to needed to claim dividend
+    uint public rewardPerDay = 50e18; // Amount perday you can claim from the dividend
+    uint public minNodeamount = 5000e18; // Min amount to needed to claim dividend
     address public owner = msg.sender;
     uint256 public scaling = uint256(10) ** 8;
     uint256 public scaledRemainder = 0;
     uint256 public scaledDividendPerToken = blocksAday / rewardPerDay; // Calc for the reward to equal only 50 coins paid out perday
-    uint256 public totalSupply = 21000000 * (uint256(10) ** decimals); //21m coins
+    uint256 public totalSupply = 21000000e18; //21m coins
 
     mapping(address => uint256) public balanceOf;
     mapping(address => uint256) public scaledDividendBalanceOf;
