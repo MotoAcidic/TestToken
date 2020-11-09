@@ -40,6 +40,25 @@
 				"inputs": [
 					{
 						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Burn",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
 						"internalType": "bytes32",
 						"name": "role",
 						"type": "bytes32"
@@ -153,7 +172,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "value",
+						"name": "tokens",
 						"type": "uint256"
 					}
 				],
@@ -188,6 +207,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "DEV_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "MINTER_ROLE",
 				"outputs": [
 					{
@@ -203,44 +235,25 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "_stakeholder",
 						"type": "address"
 					}
 				],
-				"name": "_balances",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "_totalSupply",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
+				"name": "addStakeholder",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "owner",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "delegate",
 						"type": "address"
 					}
 				],
@@ -259,16 +272,54 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "spender",
+						"name": "delegate",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "value",
+						"name": "numTokens",
 						"type": "uint256"
 					}
 				],
 				"name": "approve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenOwner",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "burn",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -282,37 +333,41 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "_from",
+						"type": "address"
+					},
+					{
 						"internalType": "uint256",
 						"name": "_value",
 						"type": "uint256"
 					}
 				],
-				"name": "changeNodeReward",
-				"outputs": [],
+				"name": "burnFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "success",
+						"type": "bool"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "_value",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "_stakeholder",
+						"type": "address"
 					}
 				],
-				"name": "changeRequiredTokens",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "decimals",
+				"name": "calculateReward",
 				"outputs": [
 					{
-						"internalType": "uint8",
+						"internalType": "uint256",
 						"name": "",
-						"type": "uint8"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -320,9 +375,66 @@
 			},
 			{
 				"inputs": [],
-				"name": "deposit",
+				"name": "circulatingSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "claimRewards",
 				"outputs": [],
-				"stateMutability": "payable",
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "contractPremine",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_stake",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_stakeholder",
+						"type": "address"
+					}
+				],
+				"name": "createStake",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "devPayment",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -456,9 +568,20 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "minNodeamount",
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "isStakeholder",
 				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					},
 					{
 						"internalType": "uint256",
 						"name": "",
@@ -487,29 +610,29 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "name",
-				"outputs": [
+				"inputs": [
 					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
+						"internalType": "uint256",
+						"name": "_stake",
+						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"name": "removeStake",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "owner",
-				"outputs": [
+				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "_stakeholder",
 						"type": "address"
 					}
 				],
-				"stateMutability": "view",
+				"name": "removeStakeholder",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -549,85 +672,14 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "rewardPerDay",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "_stakeholder",
 						"type": "address"
 					}
 				],
-				"name": "scaledDividendBalanceOf",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "scaledDividendCreditedTo",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "scaledDividendPerToken",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "scaledRemainder",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "scaling",
+				"name": "rewardOf",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -657,13 +709,58 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "symbol",
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_stakeholder",
+						"type": "address"
+					}
+				],
+				"name": "stakeOf",
 				"outputs": [
 					{
-						"internalType": "string",
+						"internalType": "uint256",
 						"name": "",
-						"type": "string"
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalRewards",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalStakes",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -673,12 +770,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "to",
+						"name": "_toAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "value",
+						"name": "_amountOfTokens",
 						"type": "uint256"
 					}
 				],
@@ -686,7 +783,7 @@
 				"outputs": [
 					{
 						"internalType": "bool",
-						"name": "success",
+						"name": "",
 						"type": "bool"
 					}
 				],
@@ -697,17 +794,17 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "from",
+						"name": "owner",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "to",
+						"name": "buyer",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "value",
+						"name": "numTokens",
 						"type": "uint256"
 					}
 				],
@@ -715,7 +812,7 @@
 				"outputs": [
 					{
 						"internalType": "bool",
-						"name": "success",
+						"name": "",
 						"type": "bool"
 					}
 				],
@@ -723,21 +820,8 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "account",
-						"type": "address"
-					}
-				],
-				"name": "update",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
-				"name": "withdraw",
+				"name": "withdrawReward",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -745,6 +829,21 @@
 		],
 		"devdoc": {
 			"methods": {
+				"addStakeholder(address)": {
+					"params": {
+						"_stakeholder": "The stakeholder to add."
+					}
+				},
+				"calculateReward(address)": {
+					"params": {
+						"_stakeholder": "The stakeholder to calculate rewards for."
+					}
+				},
+				"createStake(uint256,address)": {
+					"params": {
+						"_stake": "The size of the stake to be created."
+					}
+				},
 				"getRoleAdmin(bytes32)": {
 					"details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}.      * To change a role's admin, use {_setRoleAdmin}."
 				},
@@ -760,21 +859,89 @@
 				"hasRole(bytes32,address)": {
 					"details": "Returns `true` if `account` has been granted `role`."
 				},
+				"isStakeholder(address)": {
+					"params": {
+						"_address": "The address to verify."
+					},
+					"returns": {
+						"_0": "bool, uint256 Whether the address is a stakeholder,  and if so its position in the stakeholders array."
+					}
+				},
+				"removeStake(uint256)": {
+					"params": {
+						"_stake": "The size of the stake to be removed. Must meet the locked days requiremenet to remove the stake"
+					}
+				},
+				"removeStakeholder(address)": {
+					"params": {
+						"_stakeholder": "The stakeholder to remove."
+					}
+				},
 				"renounceRole(bytes32,address)": {
 					"details": "Revokes `role` from the calling account.      * Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced).      * If the calling account had been granted `role`, emits a {RoleRevoked} event.      * Requirements:      * - the caller must be `account`."
 				},
 				"revokeRole(bytes32,address)": {
 					"details": "Revokes `role` from `account`.      * If `account` had been granted `role`, emits a {RoleRevoked} event.      * Requirements:      * - the caller must have ``role``'s admin role."
+				},
+				"rewardOf(address)": {
+					"params": {
+						"_stakeholder": "The stakeholder to check rewards for."
+					}
+				},
+				"stakeOf(address)": {
+					"params": {
+						"_stakeholder": "The stakeholder to retrieve the stake for."
+					},
+					"returns": {
+						"_0": "uint256 The amount of wei staked."
+					}
 				}
 			}
 		},
 		"userdoc": {
-			"methods": {}
+			"methods": {
+				"addStakeholder(address)": {
+					"notice": "A method to add a stakeholder."
+				},
+				"calculateReward(address)": {
+					"notice": "A simple method that calculates the rewards for each stakeholder."
+				},
+				"claimRewards()": {
+					"notice": "A method to distribute rewards to all stakeholders."
+				},
+				"createStake(uint256,address)": {
+					"notice": "A method for a stakeholder to create a stake."
+				},
+				"isStakeholder(address)": {
+					"notice": "A method to check if an address is a stakeholder."
+				},
+				"removeStake(uint256)": {
+					"notice": "A method for a stakeholder to remove a stake."
+				},
+				"removeStakeholder(address)": {
+					"notice": "A method to remove a stakeholder."
+				},
+				"rewardOf(address)": {
+					"notice": "A method to allow a stakeholder to check his rewards."
+				},
+				"stakeOf(address)": {
+					"notice": "A method to retrieve the stake for a stakeholder."
+				},
+				"totalRewards()": {
+					"notice": "A method to the aggregated rewards from all stakeholders."
+				},
+				"totalStakes()": {
+					"notice": "A method to the aggregated stakes from all stakeholders."
+				},
+				"withdrawReward()": {
+					"notice": "A method to allow a stakeholder to withdraw his rewards."
+				}
+			}
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/dividend.sol": "CatThis"
+			"localhost/contracts/CatThis.sol": "CatThis"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -788,28 +955,35 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/dividend.sol": {
-			"keccak256": "0x07a54314a0ef797313beee0916fb97f72de22059a9b94d8b40dcd6cce0c331a8",
+		"localhost/contracts/CatThis.sol": {
+			"keccak256": "0x24021689088e1b9982cc40368ff97f7ffc04158c77144c5ed2dbfc50fd09152a",
 			"urls": [
-				"bzz-raw://69f40fcb51a80dc52e012731332dd1abc1356b5ced70343dcdb798165fedb62a",
-				"dweb:/ipfs/QmZKorTu7iN37xCsYzaHgLDqpSheEb9YjPybkT3gDzrJYp"
+				"bzz-raw://dce621401bf3541f8e090221aa137d647a363b04f44e2281a65c71820e0c8616",
+				"dweb:/ipfs/QmcNNYYGSBqNTRTsvgZs9PdZF7JVQP86rRFpChALqLFgXN"
 			]
 		},
-		"localhost/libraries/Address.sol": {
+		"localhost/contracts/interfaces/ICatThis.sol": {
+			"keccak256": "0xf99bef3bcc403a21484dd2fc6f3a52fda7b1e55f02abdae5364017222a3f511d",
+			"urls": [
+				"bzz-raw://c98996c78d379b527c129ffbd6687c0fb58d4baceab472dff06ee1dd5e733ab3",
+				"dweb:/ipfs/QmcehkT57z2XwPU9JYAWQztrcfQDRC3i5usttx1icucqRG"
+			]
+		},
+		"localhost/contracts/libraries/Address.sol": {
 			"keccak256": "0x0939c84211a80b72a329dbecb5a5485a30838b3499adf8eaf02270e8cad536d4",
 			"urls": [
 				"bzz-raw://4339e3d125caab99c65b8969e7f6207918ab3a98f0246ae76d35ad69e82d0366",
 				"dweb:/ipfs/QmaU7LF4MyRhn7z5VJ9eUnqHuM5cAkcAbA84XH1YzjsBfZ"
 			]
 		},
-		"localhost/libraries/EnumerableSet.sol": {
+		"localhost/contracts/libraries/EnumerableSet.sol": {
 			"keccak256": "0x123e9dbf5a88da548af7a69e0638b7161a5b73a31bc44f4d00f9a56784b97ab2",
 			"urls": [
 				"bzz-raw://2080c610a1b5116dd7cb2ae8fb021bf3f95ca5c966ad848304a0ce98bef13bd7",
 				"dweb:/ipfs/QmWqXVtyFGXmoMJCbrdKvcujjPyCGcocze9peQ4UNUiepN"
 			]
 		},
-		"localhost/libraries/SafeMath.sol": {
+		"localhost/contracts/libraries/SafeMath.sol": {
 			"keccak256": "0x1de4b0c709b12d6091898b48d313de58ef0ed58ed05430f497ff36e6daf24389",
 			"urls": [
 				"bzz-raw://74b14d14c196a9a1146fefd2b6c3b2f737876f59bfc4c92d434470df5960a78e",

@@ -1,0 +1,258 @@
+{
+	"compiler": {
+		"version": "0.6.6+commit.6c089d02"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					}
+				],
+				"name": "allowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "circulatingSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/contracts/CatThis.sol": "ICatThis"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/contracts/CatThis.sol": {
+			"keccak256": "0x4b828cfb06f873c07d8ba8859466714ce2ce0e1b3d874b0cadd1d70a0327dbe6",
+			"urls": [
+				"bzz-raw://5ab660213e33113eb6f026a94d3b1eb5e50921dff64fb937f948c0d764482e4e",
+				"dweb:/ipfs/QmYP5mPiNFkVGrSojRQ1XgXQjyTb3AHAUjN4oWEjBVa3hw"
+			]
+		},
+		"localhost/contracts/libraries/Address.sol": {
+			"keccak256": "0x0939c84211a80b72a329dbecb5a5485a30838b3499adf8eaf02270e8cad536d4",
+			"urls": [
+				"bzz-raw://4339e3d125caab99c65b8969e7f6207918ab3a98f0246ae76d35ad69e82d0366",
+				"dweb:/ipfs/QmaU7LF4MyRhn7z5VJ9eUnqHuM5cAkcAbA84XH1YzjsBfZ"
+			]
+		},
+		"localhost/contracts/libraries/EnumerableSet.sol": {
+			"keccak256": "0x123e9dbf5a88da548af7a69e0638b7161a5b73a31bc44f4d00f9a56784b97ab2",
+			"urls": [
+				"bzz-raw://2080c610a1b5116dd7cb2ae8fb021bf3f95ca5c966ad848304a0ce98bef13bd7",
+				"dweb:/ipfs/QmWqXVtyFGXmoMJCbrdKvcujjPyCGcocze9peQ4UNUiepN"
+			]
+		},
+		"localhost/contracts/libraries/SafeMath.sol": {
+			"keccak256": "0x1de4b0c709b12d6091898b48d313de58ef0ed58ed05430f497ff36e6daf24389",
+			"urls": [
+				"bzz-raw://74b14d14c196a9a1146fefd2b6c3b2f737876f59bfc4c92d434470df5960a78e",
+				"dweb:/ipfs/QmSSFTNhdoAzZt6KNKyT6puM9mujERoi1iDn3MVrFSgsAd"
+			]
+		}
+	},
+	"version": 1
+}
