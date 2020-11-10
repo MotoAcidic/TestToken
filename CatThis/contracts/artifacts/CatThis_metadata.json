@@ -355,13 +355,7 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_stakeholder",
-						"type": "address"
-					}
-				],
+				"inputs": [],
 				"name": "calculateReward",
 				"outputs": [
 					{
@@ -371,6 +365,19 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "changeMonthlyReward",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -409,14 +416,14 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "_stake",
-						"type": "uint256"
-					},
-					{
 						"internalType": "address",
 						"name": "_stakeholder",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_stake",
+						"type": "uint256"
 					}
 				],
 				"name": "createStake",
@@ -597,14 +604,9 @@
 						"internalType": "address",
 						"name": "account",
 						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
 					}
 				],
-				"name": "mint",
+				"name": "removeMinterRole",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -834,12 +836,7 @@
 						"_stakeholder": "The stakeholder to add."
 					}
 				},
-				"calculateReward(address)": {
-					"params": {
-						"_stakeholder": "The stakeholder to calculate rewards for."
-					}
-				},
-				"createStake(uint256,address)": {
+				"createStake(address,uint256)": {
 					"params": {
 						"_stake": "The size of the stake to be created."
 					}
@@ -903,13 +900,10 @@
 				"addStakeholder(address)": {
 					"notice": "A method to add a stakeholder."
 				},
-				"calculateReward(address)": {
-					"notice": "A simple method that calculates the rewards for each stakeholder."
-				},
 				"claimRewards()": {
 					"notice": "A method to distribute rewards to all stakeholders."
 				},
-				"createStake(uint256,address)": {
+				"createStake(address,uint256)": {
 					"notice": "A method for a stakeholder to create a stake."
 				},
 				"isStakeholder(address)": {
@@ -956,10 +950,10 @@
 	},
 	"sources": {
 		"localhost/contracts/CatThis.sol": {
-			"keccak256": "0x24021689088e1b9982cc40368ff97f7ffc04158c77144c5ed2dbfc50fd09152a",
+			"keccak256": "0x8a4823615b92a34be9f3f7b13eea0a82bc5cb85f5f1d00bb54c388120f570e3f",
 			"urls": [
-				"bzz-raw://dce621401bf3541f8e090221aa137d647a363b04f44e2281a65c71820e0c8616",
-				"dweb:/ipfs/QmcNNYYGSBqNTRTsvgZs9PdZF7JVQP86rRFpChALqLFgXN"
+				"bzz-raw://07e0d95f2c3c665caa70e8f713d98854273bf3b82130f5796433210bd85c3cd4",
+				"dweb:/ipfs/QmcQWiQpPyfUgaJ1h43Negzwg598yrMY9rTUSUV4mvQ23J"
 			]
 		},
 		"localhost/contracts/interfaces/ICatThis.sol": {

@@ -213,11 +213,11 @@ contract CatThis is ICatThis, Context, AccessControl {
     uint256 premineTotal_ = 10250000e18; // 10.25m coins total on launch
     uint256 contractPremine_ = 5000000e18; // 5m coins
     uint256 devPayment_ = 250000e18; // 250k coins
-    uint256 _minStakeamount = 10000e18; // 10k coins in order to be added to the staking list
+    uint256 _minStakeamount = 10000; // 10k coins in order to be added to the staking list
     uint256 _circulatingSupply = 0; //Set to 0 at start
     
     // Reward based variables
-    uint256 _monthlyReward;
+    uint256 _monthlyReward = 50;
     uint256 _rewardPerDay = daysPerMonth / _monthlyReward;
     
     address _owner;
@@ -226,6 +226,7 @@ contract CatThis is ICatThis, Context, AccessControl {
     
     // Time based variables
     uint256 unlockTime;
+    uint256 monthlyClaimTime;
     uint256 private constant lockedDays = 1825; // 5 years in days
     uint256 internal constant daysPerMonth = 30; // We set a rough hardset time of 30 days per month
     uint256 internal constant blocksAday = 6500; // Rough rounded up blocks perday based on 14sec eth block time
@@ -256,11 +257,11 @@ contract CatThis is ICatThis, Context, AccessControl {
     // ------------------------------------------------------------------------
     // Change reward amount
     // ------------------------------------------------------------------------
-    //function changeMonthlyReward(uint _value) public {
-        //require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender) || hasRole(DEV_ROLE, msg.sender), "Admin or Dev can only change the rewards.");
-      //  require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender));
-        //_monthlyReward = _value;
-    //}
+    function changeMonthlyReward(uint _value) public {
+        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender) || hasRole(DEV_ROLE, msg.sender), "Admin or Dev can only change the rewards.");
+        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender));
+        _monthlyReward = _value;
+    }
     
     // ------------------------------------------------------------------------
     //                              Role Based Setup
@@ -279,9 +280,11 @@ contract CatThis is ICatThis, Context, AccessControl {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Admin can only grant burner role.");
         grantRole(BURNER_ROLE, account);
     }
-
-
-
+    
+    function removeMinterRole(address account) public {
+        require(hasRole(MINTER_ROLE, msg.sender), "Minters can only remove minter role.");
+        revokeRole(MINTER_ROLE, account);
+    }
 
     // ------------------------------------------------------------------------
     //                              Premine Functions
@@ -290,8 +293,8 @@ contract CatThis is ICatThis, Context, AccessControl {
     function contractPremine() public view returns (uint256) { return contractPremine_; }
     function devPayment() public view returns (uint256) { return devPayment_; }
     
-    function mint(address account, uint256 amount) public {
-        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender) || hasRole(MINTER_ROLE, msg.sender), "Caller is not a minter");
+    function mint(address account, uint256 amount) internal {
+        //require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender) || hasRole(MINTER_ROLE, msg.sender), "Caller is not a minter");
         _circulatingSupply = _circulatingSupply.add(amount);
         _balances[account] = _balances[account].add(amount);
         emit Transfer(address(0), account, amount);
@@ -373,11 +376,16 @@ contract CatThis is ICatThis, Context, AccessControl {
      * @notice A method for a stakeholder to create a stake.
      * @param _stake The size of the stake to be created.
      */
-    function createStake(uint256 _stake, address _stakeholder) public {
-    //function createStake(uint256 _stake) public {
-        require(_balances[msg.sender] <= _minStakeamount, "You need at least 10k tokens in order to create a stake!");
-        // Amount of time it takes to unstake the new tokens
+    function createStake(address _stakeholder, uint256 _stake) public {
+
+        require(_stake >= _minStakeamount && _stake >= _balances[msg.sender], "Test this method.");
+        
+        // Set the time it takes to unstake
         unlockTime = now + (lockedDays * 1 days);
+        
+        // Set the monthly claim time of the rewards
+        monthlyClaimTime = now + (daysPerMonth * 1 days);
+        
          //Add the staker to the stake array
         (bool _isStakeholder, ) = isStakeholder(_stakeholder);
         if(!_isStakeholder) stakeholders.push(_stakeholder);
@@ -480,22 +488,25 @@ contract CatThis is ICatThis, Context, AccessControl {
         return _totalRewards;
     }
 
-    /** 
+    /* 
      * @notice A simple method that calculates the rewards for each stakeholder.
      * @param _stakeholder The stakeholder to calculate rewards for.
      */
-    function calculateReward(address _stakeholder) public view returns(uint256) {
-        return stakes[_stakeholder] / 100;
+    function calculateReward() public view returns(uint256) {
+        return _monthlyReward;
     }
 
     /**
      * @notice A method to distribute rewards to all stakeholders.
      */
     function claimRewards() public {
+        //grantRole(MINTER_ROLE, msg.sender);
         for (uint256 s = 0; s < stakeholders.length; s += 1){
             address stakeholder = stakeholders[s];
-            uint256 reward = calculateReward(stakeholder);
-            rewards[stakeholder] = rewards[stakeholder].add(reward);
+            uint256 reward = calculateReward();
+            //rewards[stakeholder] = rewards[stakeholder].add(reward);
+            emit Transfer(address(0), stakeholder, reward);
+            //revokeRole(MINTER_ROLE, msg.sender);
         }
     }
 
